@@ -1,0 +1,26 @@
+﻿@model IEnumerable<AspNet.Models.Collection>
+@{
+    ViewData["Title"] = "Collections Index Page";
+}
+
+
+<p class="h1">My Collections</p>
+
+<div style="margin-bottom: 10px;">@Html.ActionLink("New", "new",new { }, new { @style = "color:white", @class = "btn btn-primary" })</div>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Collected</th>
+        <th style="width:70px">Actions</th>
+    </tr>
+    @foreach(var collection in Model)
+    {
+    <tr>
+        <td>@collection.Name</td>
+        <td>@collection.Collected.ToString() / @collection.Total.ToString()</td>
+        <td>@Html.ActionLink("Info", "show", new { id = collection.CollectionId }, new { @style = "color:white", @class = "btn btn-info" })</td>
+
+
+    </tr>
+    }
+</table>
