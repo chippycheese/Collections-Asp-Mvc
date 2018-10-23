@@ -1,4 +1,22 @@
-﻿@{
-    ViewData["Title"] = "Collections Edit Page";
+﻿@model AspNet.Models.Collection
+
+@{
+    ViewData["Title"] = "Collections New Page";
 }
-<h1>Edit Collection</h1>
+<form asp-route-id=@Model.CollectionId asp-action="update" method="post">
+    <h1>Edit Collection</h1>
+    <div class="row">
+        <div class="col-12 form-group">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" placeholder="Name" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" name="submit" value="Update" class="btn btn-success" />
+        </div>
+        <div class="col-6">
+            <a asp-action="DeleteCollection" asp-route-id=@Model.CollectionId class="btn btn-danger float-right">Delete</a>
+        </div>
+    </div>
+</form>

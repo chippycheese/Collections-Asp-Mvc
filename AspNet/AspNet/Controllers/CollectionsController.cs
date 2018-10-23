@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNet.Contexts;
+using AspNet.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,7 @@ namespace AspNet.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            var collections = _context.Collections.ToList();
+            var collections = _context.Collections.Where(m => m.Active == true).ToList();
             return View(collections);
         }
 
@@ -35,7 +36,11 @@ namespace AspNet.Controllers
         [Route("{id}")]
         public IActionResult Show(int id)
         {
-            return View();
+            var collection = _context.Collections.Find(id);
+            if(collection == null){
+                return NotFound();
+            }
+            return View(collection);
         }
 
         // GET: /<controller>/:id
@@ -48,32 +53,63 @@ namespace AspNet.Controllers
 
         // GET: /<controller>/:id
         [HttpPost]
-        [Route("Create")]
-        public IActionResult Create()
+        [ValidateAntiForgeryToken]
+        [Route("create")]
+        public async Task<IActionResult> Create([Bind("Name")] Collection collection)
         {
-            return View();
+            collection.Active = true;
+            if (ModelState.IsValid)
+            {
+                _context.Add(collection);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("New");
         }
+
+
 
         // GET: /<controller>/:id
         [HttpGet]
         [Route("{id}/edit")]
         public IActionResult Edit(int id)
         {
-            return View();
+            var collection = _context.Collections.Find(id);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            return View(collection);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("{id}/update")]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id, [Bind("Name")] Collection collection)
         {
-            return View();
+            var db_collection = _context.Collections.Find(id);
+            if (db_collection == null)
+            {
+                return RedirectToAction("Index");
+            }
+            db_collection.Name = collection.Name;
+            _context.Update(db_collection);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpGet, ActionName("DeleteCollection")]
         [Route("{id}/destroy")]
-        public IActionResult Destory(int id)
+        public async Task<IActionResult> Destroy(int id)
         {
-            return View();
+            var collection = _context.Collections.Find(id);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+            collection.Active = false;
+            _context.Update(collection);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
     }
