@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using AspNet.Contexts;
 using AspNet.Models;
 
@@ -22,7 +23,7 @@ namespace AspNet.Controllers
         }
 
         // GET: /<controller>/
-        [HttpGet]
+        [HttpGet, ActionName("CollectionIndex")]
         [Route("")]
         [Route("/")]
         public IActionResult Index()
@@ -32,7 +33,7 @@ namespace AspNet.Controllers
         }
 
         // GET: /<controller>/:id
-        [HttpGet]
+        [HttpGet, ActionName("CollectionShow")]
         [Route("{id}")]
         public IActionResult Show(int id)
         {
@@ -40,11 +41,12 @@ namespace AspNet.Controllers
             if(collection == null){
                 return NotFound();
             }
+            collection.Items = _context.Items.Where(m => m.CollectionId == collection.CollectionId).Where(m => m.Active == true).ToList();
             return View(collection);
         }
 
         // GET: /<controller>/:id
-        [HttpGet]
+        [HttpGet, ActionName("CollectionNew")]
         [Route("new")]
         public IActionResult New()
         {
@@ -52,7 +54,7 @@ namespace AspNet.Controllers
         }
 
         // GET: /<controller>/:id
-        [HttpPost]
+        [HttpPost, ActionName("CollectionCreate")]
         [ValidateAntiForgeryToken]
         [Route("create")]
         public async Task<IActionResult> Create([Bind("Name")] Collection collection)
@@ -62,15 +64,15 @@ namespace AspNet.Controllers
             {
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("CollectionIndex");
             }
-            return RedirectToAction("New");
+            return RedirectToAction("CollectionNew");
         }
 
 
 
         // GET: /<controller>/:id
-        [HttpGet]
+        [HttpGet, ActionName("CollectionEdit")]
         [Route("{id}/edit")]
         public IActionResult Edit(int id)
         {
@@ -82,22 +84,22 @@ namespace AspNet.Controllers
             return View(collection);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("CollectionUpdate")]
         [Route("{id}/update")]
         public async Task<IActionResult> Update(int id, [Bind("Name")] Collection collection)
         {
             var db_collection = _context.Collections.Find(id);
             if (db_collection == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("CollectionIndex");
             }
             db_collection.Name = collection.Name;
             _context.Update(db_collection);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("CollectionShow", "Collections", new { id = id });
         }
 
-        [HttpGet, ActionName("DeleteCollection")]
+        [HttpGet, ActionName("CollectionDestroy")]
         [Route("{id}/destroy")]
         public async Task<IActionResult> Destroy(int id)
         {
@@ -109,7 +111,7 @@ namespace AspNet.Controllers
             collection.Active = false;
             _context.Update(collection);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("CollectionIndex");
         }
 
     }

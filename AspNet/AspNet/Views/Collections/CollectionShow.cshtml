@@ -1,0 +1,29 @@
+﻿@model AspNet.Models.Collection
+
+@{
+    ViewData["Title"] = "Collections Show Page";
+}
+<h1>Show Collection</h1>
+
+<div class="row">
+    <div class="col-4">
+        <span class="h3">@Model.Name</span>
+    </div>
+    <div class="col-4">
+        <span class="h3">Collected: @Model.Collected / @Model.Total</span>
+    </div>
+    <div class="col-4">
+        <a asp-action="CollectionIndex" class="btn btn-primary float-right ml-2">Back</a>
+        <a asp-action="CollectionEdit" asp-route-id=@Model.CollectionId class="btn btn-warning float-right">Edit</a>
+    </div>
+</div>
+<hr />
+
+<span class="h3">Items</span>
+<div class="row">
+    <div class="col-12">
+        <a asp-action="ItemNew" asp-controller="Items" asp-route-collectionId=@Model.CollectionId class="btn btn-primary mt-2 mb-2">New</a>
+    </div>
+</div>
+
+@{Html.RenderPartialAsync("/Views/Items/ItemIndex.cshtml", Model.Items); }

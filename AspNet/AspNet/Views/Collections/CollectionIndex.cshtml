@@ -6,7 +6,7 @@
 
 <p class="h1">My Collections</p>
 
-<div style="margin-bottom: 10px;">@Html.ActionLink("New", "new",new { }, new { @style = "color:white", @class = "btn btn-primary" })</div>
+<div style="margin-bottom: 10px;">@Html.ActionLink("New", "CollectionNew", new { }, new { @style = "color:white", @class = "btn btn-primary" })</div>
 <table class="table">
     <tr>
         <th>Name</th>
@@ -18,7 +18,7 @@
     <tr>
         <td>@collection.Name</td>
         <td>@collection.Collected.ToString() / @collection.Total.ToString()</td>
-        <td>@Html.ActionLink("Info", "show", new { id = collection.CollectionId }, new { @style = "color:white", @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Info", "CollectionShow", new { id = collection.CollectionId }, new { @style = "color:white", @class = "btn btn-info" })</td>
 
 
     </tr>

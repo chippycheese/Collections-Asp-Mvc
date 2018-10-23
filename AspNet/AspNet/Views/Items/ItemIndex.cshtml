@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AspNet.Models.Item>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Collected</th>
+        <th style="width:70px">Actions</th>
+    </tr>
+    @foreach(var item in Model){
+        <tr>
+           <td>@item.Name</td>
+           <td>@item.Price</td>
+            @if (item.Collected)
+            {
+           <td>Yes</td>
+            }
+            else
+            {
+           <td><a asp-action="ItemCollect" asp-controller="Items" asp-route-collectionId=@item.CollectionId asp-route-id=@item.ItemId class="btn btn-success">Collect</a></td>
+            }
+
+           <td>
+               <a asp-action="ItemEdit" asp-controller="Items" asp-route-collectionId=@item.CollectionId asp-route-id=@item.ItemId class="btn btn-warning float-right">Edit</a>
+           </td>
+        </tr>
+    }
+</table>
