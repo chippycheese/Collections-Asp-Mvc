@@ -34,6 +34,7 @@ namespace AspNet.Controllers
         public ActionResult<Collection> Get(int id)
         {
             var collection = _context.Collections.Find(id);
+            collection.Items = _context.Items.ToList();
             if (collection == null)
             {
                 return NotFound();
@@ -44,12 +45,12 @@ namespace AspNet.Controllers
         // GET: /<controller>/:id
         [HttpPost]
         [Route("post")]
-        public IActionResult Post([FromBody]Collection value)
+        public ActionResult<Collection> Post([FromBody]Collection value)
         {
             value.Active = true;
             _context.Collections.Add(value);
             _context.SaveChanges();
-            return CreatedAtRoute("GetCollection", new { id = value.CollectionId }, value);
+            return value;
         }
 
         [HttpPut]
@@ -64,7 +65,7 @@ namespace AspNet.Controllers
             collection.Name = value.Name;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return CreatedAtRoute("GetCollection", new { id = value.CollectionId }, collection);
+            return collection;
         }
 
         [HttpDelete]
@@ -79,7 +80,7 @@ namespace AspNet.Controllers
             collection.Active = false;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return CreatedAtRoute("GetCollection", new { id = collection.CollectionId }, collection);
+            return collection;
         }
 
     }
