@@ -26,4 +26,4 @@
     </div>
 </div>
 
-@{Html.RenderPartialAsync("/Views/Items/ItemIndex.cshtml", Model.Items); }
+<partial name="/Views/Items/ItemIndex.cshtml" model=@Model.Items />
