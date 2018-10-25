@@ -25,7 +25,6 @@ namespace AspNet.Controllers
         // GET: /<controller>/
         [HttpGet, ActionName("CollectionIndex")]
         [Route("")]
-        [Route("/")]
         public IActionResult Index()
         {
             var collections = _context.Collections.Where(m => m.Active == true).ToList();
