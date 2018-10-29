@@ -1,0 +1,17 @@
+<p class="h1">My Collections</p>
+
+<div style="margin-bottom: 10px;">
+<a class="btn btn-primary" style="color: white">New</a>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Collected</th>
+        <th style="width:70px">Actions</th>
+    </tr>
+    
+    <tr *ngFor="let collection of collections$">
+      <td>{{collection.Name}}</td>
+      <td>{{collection.Collected}} / {{collection.Total}}</td>
+      <td><a class="btn btn-info" style="color: white">Info</a></td>
+    </tr>
+</table>

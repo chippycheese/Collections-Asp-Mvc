@@ -36,7 +36,12 @@ namespace AspNet
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddCors();
+            services.AddCors(options =>
+            {
+            options.AddPolicy("ApiReady",
+                              builder => builder.AllowAnyOrigin());
+            });
+
             services.AddDbContext<MySqlContext>(options => options.UseMySql(Configuration.GetConnectionString("mySqlConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -57,6 +62,7 @@ namespace AspNet
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseCors("ApiReady");
 
             app.UseMvc();
         }

@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNet.Contexts;
 using AspNet.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AspNet.Controllers
 {
     [Route("api/collections")]
+    [EnableCors("ApiReady")]
     public class CollectionsAPIController : Controller
     {
         private readonly MySqlContext _context;
@@ -23,9 +26,9 @@ namespace AspNet.Controllers
         // GET: api/collections
         [HttpGet]
         [Route("")]
-        public IEnumerable<Collection> Get()
+        public string Get()
         {
-            return _context.Collections.ToList();
+            return JsonConvert.SerializeObject(_context.Collections.Where(m => m.Active == true).ToList(), Formatting.Indented);
         }   
 
         // GET: /<controller>/:id
