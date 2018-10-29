@@ -1,36 +1,47 @@
 <h1>Show Collection</h1>
+<div *ngIf="collection$">
+  
 
-<div class="row">
-    <div class="col-4">
-        <span class="h3">{{collection$.Name}}</span>
+  <div class="row">
+      <div class="col-4">
+          <span class="h3">{{collection$.Name}}</span>
+      </div>
+      <div class="col-4">
+          <span class="h3">Collected: {{collection$.Collected}} / {{collection$.Total}}</span>
+      </div>
+      <div class="col-4">
+          <a href="./" class="btn btn-primary float-right ml-2">Back</a>
+          <a href="./collections/edit/{{collection$.CollectionId}}" class="btn btn-warning float-right">Edit</a>
+      </div>
+  </div>
+
+  <span class="h3">Items</span>
+  <div class="row">
+    <div class="col-12">
+        <a href="./collection/{{collectionId$}}/items/new" class="btn btn-primary mt-2 mb-2">New</a>
     </div>
-    <div class="col-4">
-        <span class="h3">Collected: {{collection$.Collected}} / {{collection$.Total}}</span>
-    </div>
-    <div class="col-4">
-        <a href="./" class="btn btn-primary float-right ml-2">Back</a>
-        <a class="btn btn-warning float-right">Edit</a>
-    </div>
+  </div>
+  
+  <table class="table">
+      <tr>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Collected</th>
+          <th style="width:70px">Actions</th>
+      </tr>
+      <tr *ngFor="let item of items$">
+        <td>{{item.Name}}</td>  
+        <td>${{item.Price.toFixed(2)}}</td>
+        <td>
+          <div *ngIf="item.Collected; else notCollected">
+            Yes
+          </div>
+          <ng-template #notCollected>
+            No
+          </ng-template>
+        </td>
+        <td><a href="./collection/{{collection$.CollectionId}}/items/edit/{{item.ItemId}}" class="btn btn-info" style="color: white">Info</a></td>
+      </tr>
+  </table>
+
 </div>
-
-<table class="table">
-    <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Collected</th>
-        <th style="width:70px">Actions</th>
-    </tr>
-    <tr *ngFor="let item of items$">
-      <td>{{item.Name}}</td>  
-      <td>${{item.Price.toFixed(2)}}</td>
-      <td>
-        <div *ngIf="item.Collected; else notCollected">
-          Yes
-        </div>
-        <ng-template #notCollected>
-          No
-        </ng-template>
-      </td>
-      <td><a href="./collection/{{collection$.CollectionId}}/items/{{item.ItemId}}/edit" class="btn btn-info" style="color: white">Info</a></td>
-    </tr>
-</table>

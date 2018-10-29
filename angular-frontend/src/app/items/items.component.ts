@@ -10,19 +10,19 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ItemsComponent implements OnInit {
 
-  id$: Object;
+  collectionId$: Object;
   collection$: Object;
   items$: Object;
   
   constructor(private route: ActivatedRoute, private data: DataService) { 
-     this.route.params.subscribe( params => this.id$ = params.id );
+     this.route.params.subscribe( params => this.collectionId$ = params.collectionId );
   }
 
   ngOnInit() {
-    this.data.getCollection(this.id$).subscribe(
+    this.data.getCollection(this.collectionId$).subscribe(
       data => this.collection$ = data
     );
-    this.data.getItemsInCollection(this.id$).subscribe(
+    this.data.getItemsInCollection(this.collectionId$).subscribe(
       data => this.items$ = data
     );
 
