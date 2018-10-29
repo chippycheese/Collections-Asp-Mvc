@@ -37,7 +37,6 @@ namespace AspNet.Controllers
         public ActionResult<string> Get(int id)
         {
             var collection = _context.Collections.Find(id);
-            collection.Items = _context.Items.ToList();
             if (collection == null)
             {
                 return NotFound();
