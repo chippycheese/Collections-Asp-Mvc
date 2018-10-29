@@ -34,7 +34,7 @@ namespace AspNet.Controllers
         // GET: /<controller>/:id
         [HttpGet]
         [Route("{id}", Name = "GetCollection")]
-        public ActionResult<Collection> Get(int id)
+        public ActionResult<string> Get(int id)
         {
             var collection = _context.Collections.Find(id);
             collection.Items = _context.Items.ToList();
@@ -42,7 +42,7 @@ namespace AspNet.Controllers
             {
                 return NotFound();
             }
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
         // GET: /<controller>/:id

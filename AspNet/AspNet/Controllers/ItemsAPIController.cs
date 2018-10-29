@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNet.Contexts;
 using AspNet.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AspNet.Controllers
 {
     [Route("api/items")]
+    [EnableCors("ApiReady")]
     public class ItemsAPIController : Controller
     {
 
@@ -29,9 +32,10 @@ namespace AspNet.Controllers
         }
 
         [HttpGet("collection/{collectionId}")]
-        public IEnumerable<Item> GetCollection(int collectionId)
+        public ActionResult<string> GetCollection(int collectionId)
         {
-            return _context.Items.Where(m => m.CollectionId == collectionId).ToList();
+            var collectionItems = _context.Items.Where(m => m.CollectionId == collectionId).Where(m => m.Active == true).ToList();
+            return JsonConvert.SerializeObject(collectionItems, Formatting.Indented);
         }
 
         [HttpGet("{id}"), ActionName("GetCollectionItem")]
