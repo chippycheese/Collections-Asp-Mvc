@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CollectionsService } from '../../services/collections.service'
 import { HttpClient } from '@angular/common/http';
 
 @Component({

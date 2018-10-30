@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { CollectionsService } from '../services/collections.service'
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,7 +11,7 @@ export class CollectionsComponent implements OnInit {
 
   collections$: Object;
   
-  constructor(private data: DataService) { }
+  constructor(private data: CollectionsService) { }
 
   ngOnInit() {
     this.data.getCollections().subscribe(

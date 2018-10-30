@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../data.service';
+import { CollectionsService } from '../../services/collections.service'
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from "@angular/router";
 
@@ -13,12 +13,12 @@ export class CollectionEditComponent implements OnInit {
   id$: Object;
   collection$: Object;
   
-  constructor(private route: ActivatedRoute, private data: DataService) { 
+  constructor(private route: ActivatedRoute, private data: CollectionsService) { 
      this.route.params.subscribe( params => this.id$ = params.id );
   }
 
   ngOnInit() {
-    this.data.getCollection(this.id$).subscribe(
+    this.data.readCollection(this.id$).subscribe(
       data => this.collection$ = data 
     );
   }

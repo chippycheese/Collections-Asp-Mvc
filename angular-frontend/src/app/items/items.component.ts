@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+
+import { ItemsService } from '../services/items.service'
+import { CollectionsService } from '../services/collections.service'
+
+
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from "@angular/router";
 
@@ -14,15 +18,15 @@ export class ItemsComponent implements OnInit {
   collection$: Object;
   items$: Object;
   
-  constructor(private route: ActivatedRoute, private data: DataService) { 
+  constructor(private route: ActivatedRoute, private dataCollections: CollectionsService, private dataItems: ItemsService ) { 
      this.route.params.subscribe( params => this.collectionId$ = params.collectionId );
   }
 
   ngOnInit() {
-    this.data.getCollection(this.collectionId$).subscribe(
+    this.dataCollections.readCollection(this.collectionId$).subscribe(
       data => this.collection$ = data
     );
-    this.data.getItemsInCollection(this.collectionId$).subscribe(
+    this.dataItems.getCollectionItems(this.collectionId$).subscribe(
       data => this.items$ = data
     );
 

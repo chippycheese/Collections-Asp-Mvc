@@ -46,7 +46,7 @@ namespace AspNet.Controllers
 
         // GET: /<controller>/:id
         [HttpPost]
-        [Route("post")]
+        [Route("")]
         public ActionResult<Collection> Post([FromBody]Collection value)
         {
             value.Active = true;
@@ -56,7 +56,7 @@ namespace AspNet.Controllers
         }
 
         [HttpPut]
-        [Route("{id}/put")]
+        [Route("{id}")]
         public ActionResult<Collection> Put(int id, [FromBody]Collection value)
         {
             var collection = _context.Collections.Find(id);
@@ -71,7 +71,7 @@ namespace AspNet.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}/delete")]
+        [Route("{id}")]
         public ActionResult<Collection> Delete(int id)
         {
             var collection = _context.Collections.Find(id);

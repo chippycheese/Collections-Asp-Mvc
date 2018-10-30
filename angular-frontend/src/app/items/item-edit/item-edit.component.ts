@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../data.service';
+
+import { ItemsService } from '../../services/items.service'
+
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from "@angular/router";
 
@@ -15,13 +17,13 @@ export class ItemEditComponent implements OnInit {
   collectionId$: Object;
   item$: Object;
   
-  constructor(private route: ActivatedRoute, private data: DataService) { 
+  constructor(private route: ActivatedRoute, private data: ItemsService) { 
      this.route.params.subscribe( params => this.id$ = params.id );
      this.route.params.subscribe( params => this.collectionId$ = params.collectionId );
   }
 
   ngOnInit() {
-    this.data.getItem(this.id$).subscribe(
+    this.data.readItem(this.id$).subscribe(
       data => this.item$ = data
     );
   }
