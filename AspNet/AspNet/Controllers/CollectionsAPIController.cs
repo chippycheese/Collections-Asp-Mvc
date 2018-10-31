@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNet.Contexts;
 using AspNet.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AspNet.Controllers
 {
     [Route("api/collections")]
+    [EnableCors("ApiReady")]
     public class CollectionsAPIController : Controller
     {
         private readonly MySqlContext _context;
@@ -23,39 +26,39 @@ namespace AspNet.Controllers
         // GET: api/collections
         [HttpGet]
         [Route("")]
-        public IEnumerable<Collection> Get()
+        public string Get()
         {
-            return _context.Collections.ToList();
+            return JsonConvert.SerializeObject(_context.Collections.Where(m => m.Active == true).ToList(), Formatting.Indented);
         }   
 
         // GET: /<controller>/:id
         [HttpGet]
         [Route("{id}", Name = "GetCollection")]
-        public ActionResult<Collection> Get(int id)
+        public ActionResult<string> Get(int id)
         {
             var collection = _context.Collections.Find(id);
-            collection.Items = _context.Items.ToList();
             if (collection == null)
             {
                 return NotFound();
             }
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
         // GET: /<controller>/:id
         [HttpPost]
-        [Route("post")]
-        public ActionResult<Collection> Post([FromBody]Collection value)
+        [Route("")]
+        public ActionResult<string> Post([FromBody]Collection value)
         {
             value.Active = true;
             _context.Collections.Add(value);
             _context.SaveChanges();
-            return value;
+            return JsonConvert.SerializeObject(value, Formatting.Indented);
+
         }
 
         [HttpPut]
-        [Route("{id}/put")]
-        public ActionResult<Collection> Put(int id, [FromBody]Collection value)
+        [Route("{id}")]
+        public ActionResult<string> Put(int id, [FromBody]Collection value)
         {
             var collection = _context.Collections.Find(id);
             if (collection == null)
@@ -65,12 +68,13 @@ namespace AspNet.Controllers
             collection.Name = value.Name;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
         [HttpDelete]
-        [Route("{id}/delete")]
-        public ActionResult<Collection> Delete(int id)
+        [EnableCors("ApiReady")]
+        [Route("{id}")]
+        public ActionResult<string> Delete(int id)
         {
             var collection = _context.Collections.Find(id);
             if (collection == null)
@@ -80,7 +84,7 @@ namespace AspNet.Controllers
             collection.Active = false;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
     }

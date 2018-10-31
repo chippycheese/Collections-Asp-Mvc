@@ -1,0 +1,19 @@
+<div *ngIf="collection$">
+  <form [formGroup]="collectionForm" (ngSubmit)="update()">
+      <h1>Edit Collection</h1>
+      <div class="row">
+          <div class="col-12 form-group">
+              <label>Name</label>
+              <input type="text"  formControlName="Name" class="form-control" placeholder="Name" value="{{collection$.Name}}" />
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-6">
+              <button type="submit" class="btn btn-success">Update</button>
+          </div>
+          <div class="col-6">
+              <a class="btn btn-danger float-right" (click)="delete(collection$.CollectionId)">Delete</a>
+          </div>
+      </div>
+  </form>
+</div>
