@@ -10,6 +10,7 @@ import { CollectionNewComponent } from './collections/collection-new/collection-
 import { CollectionEditComponent } from './collections/collection-edit/collection-edit.component';
 import { ItemNewComponent } from './items/item-new/item-new.component';
 import { ItemEditComponent } from './items/item-edit/item-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ItemEditComponent } from './items/item-edit/item-edit.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

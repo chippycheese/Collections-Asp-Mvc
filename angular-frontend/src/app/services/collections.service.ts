@@ -20,15 +20,16 @@ export class CollectionsService {
 
   collectionURL :string = "https://localhost:5001/api/collections";
   
-
   constructor(private http: HttpClient) { }
 
   getCollections() {
-    return this.http.get(this.collectionURL)
+    const url = `${this.collectionURL}`;
+    return this.http.get(url)
   }
   
-  createCollection (hero: Collection): Observable<Collection> {
-  return this.http.post<Collection>(this.collectionURL, hero);
+  createCollection (collection: Collection): Observable<Collection> {
+    const url = `${this.collectionURL}`;
+    return this.http.post<Collection>(url, collection);
   }
 
   readCollection(id) {
@@ -36,20 +37,14 @@ export class CollectionsService {
     return this.http.get(url)
   }
 
-  updateCollection(collection: Collection): Observable<void> {
+  updateCollection(collection: Collection): Observable<Collection> {
     const url = `${this.collectionURL}/${collection.CollectionId}`;
-    return this.http.put<void>(url , collection);
+    return this.http.put<Collection>(url, collection);
   }
 
   deleteCollection (id: number): Observable<{}> {
     const url = `${this.collectionURL}/${id}`;
-    const httpOptions = {
-      headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
-      })
-    };
-    return this.http.delete(url, httpOptions);
+    return this.http.delete(url);
   }
 
 

@@ -1,19 +1,19 @@
 <div *ngIf="collection$">
-  <form asp-action="CollectionUpdate" method="post">
-      <h1>Edit Collection</h1>
+  <form [formGroup]="collectionForm" (ngSubmit)="update()">
+      <h1>New Collection</h1>
       <div class="row">
           <div class="col-12 form-group">
-              <label for="Name">Name</label>
-              <input type="text" id="Name" name="Name" value={{collection$.Name}} class="form-control" placeholder="Name" />
+              <label>Name</label>
+              <input type="text"  formControlName="Name" class="form-control" placeholder="Name" value="{{collection$.Name}}" />
           </div>
       </div>
       <div class="row">
           <div class="col-6">
-              <input type="submit" name="submit" value="Update" class="btn btn-success" />
-          </div>
-          <div class="col-6">
-              <a class="btn btn-danger float-right" (click)="delete(collection$.CollectionId)">Delete</a>
-          </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-6">
+                <a class="btn btn-danger float-right" (click)="delete(collection$.CollectionId)">Delete</a>
+            </div>
       </div>
   </form>
 </div>
