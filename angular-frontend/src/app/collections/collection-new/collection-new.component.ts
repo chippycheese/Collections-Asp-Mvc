@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionsService } from '../../services/collections.service'
+import { CollectionsService, Collection } from '../../services/collections.service'
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,18 +11,23 @@ import { HttpClient } from '@angular/common/http';
 export class CollectionNewComponent implements OnInit {
 
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private data: CollectionsService) { }
 
   ngOnInit() {
   }
 
+  collection : Collection = {
+    CollectionId: 100,
+    Name: "Okay",
+    Collected: 0,
+    Total: 0,
+    Active: true
+  };
+
   create(){
-    const url = 'localhost:5001/collections/post';
-    const data = {
-      name: 'Simple'
-    }
-    this.http.post(url,data);
-    console.log(data);
+    console.log("test");
+    this.data.createCollection(this.collection).subscribe();
   };
 
 }

@@ -71,6 +71,7 @@ namespace AspNet.Controllers
         }
 
         [HttpDelete]
+        [EnableCors("ApiReady")]
         [Route("{id}")]
         public ActionResult<Collection> Delete(int id)
         {

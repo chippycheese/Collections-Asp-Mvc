@@ -39,7 +39,7 @@ namespace AspNet
             services.AddCors(options =>
             {
             options.AddPolicy("ApiReady",
-                              builder => builder.AllowAnyOrigin());
+                              builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
 
             services.AddDbContext<MySqlContext>(options => options.UseMySql(Configuration.GetConnectionString("mySqlConnection")));

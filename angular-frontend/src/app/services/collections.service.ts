@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 export interface Collection {
   CollectionId: number;
@@ -8,7 +10,6 @@ export interface Collection {
   Collected: number;
   Total: number;
   Active: boolean;
-
 }
 
 @Injectable({
@@ -17,30 +18,38 @@ export interface Collection {
 
 export class CollectionsService {
 
+  collectionURL :string = "https://localhost:5001/api/collections";
+  
+
   constructor(private http: HttpClient) { }
 
   getCollections() {
-    return this.http.get('https://localhost:5001/api/collections')
+    return this.http.get(this.collectionURL)
   }
-
-
-
-
-
-  createCollection(collection: Collection): Observable<Collection> {
-    return this.http.post<Collection>('https://localhost:5001/api/collections', collection);
+  
+  createCollection (hero: Collection): Observable<Collection> {
+  return this.http.post<Collection>(this.collectionURL, hero);
   }
 
   readCollection(id) {
-    return this.http.get('https://localhost:5001/api/collections/' + id)
+    const url = `${this.collectionURL}/${id}`;
+    return this.http.get(url)
   }
 
   updateCollection(collection: Collection): Observable<void> {
-    return this.http.put<void>('https://localhost:5001/api/collections/' + collection.CollectionId, collection);
+    const url = `${this.collectionURL}/${collection.CollectionId}`;
+    return this.http.put<void>(url , collection);
   }
 
-  deleteCollection(id) {
-    return this.http.delete('https://localhost:5001/api/collections/' + id);
+  deleteCollection (id: number): Observable<{}> {
+    const url = `${this.collectionURL}/${id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'my-auth-token'
+      })
+    };
+    return this.http.delete(url, httpOptions);
   }
 
 

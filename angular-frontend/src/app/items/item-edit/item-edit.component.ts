@@ -32,7 +32,17 @@ export class ItemEditComponent implements OnInit {
     
   }
 
-  delete(){
-    
+  delete(id : number){
+    console.log("Delete Item: " + id)
+    this.data.deleteItem(id).subscribe(
+      suc => {
+            console.log(suc);
+            window.location.href = "http://localhost:4200/collection/" + this.collectionId$ + "/items";
+        },
+        err => {
+            console.log(err );
+        }
+      );
   }
+
 }

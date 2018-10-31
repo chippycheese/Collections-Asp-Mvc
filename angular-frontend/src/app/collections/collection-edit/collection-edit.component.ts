@@ -27,8 +27,17 @@ export class CollectionEditComponent implements OnInit {
     
   }
 
-  delete(){
-    
+  delete(id : number){
+    console.log("Delete Collection: " + id)
+    this.data.deleteCollection(id).subscribe(
+      suc => {
+            console.log(suc);
+            window.location.href = "http://localhost:4200/collections";
+        },
+        err => {
+            console.log(err );
+        }
+      );
   }
 
 }
