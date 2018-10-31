@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ItemsService } from '../../services/items.service'
-
-import { Observable } from 'rxjs';
+import { ItemsService, Item } from '../../services/items.service'
+import { CollectionsService } from '../../services/collections.service'
+import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from "@angular/router";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-item-edit',
@@ -15,7 +15,13 @@ export class ItemEditComponent implements OnInit {
 
   id$: Object;
   collectionId$: Object;
-  item$: Object;
+  item$: Item;
+
+  itemForm = new FormGroup({
+    Name: new FormControl(''),
+    Price: new FormControl(''),
+    Collected: new FormControl(false)
+  });
   
   constructor(private route: ActivatedRoute, private data: ItemsService) { 
      this.route.params.subscribe( params => this.id$ = params.id );
@@ -24,12 +30,23 @@ export class ItemEditComponent implements OnInit {
 
   ngOnInit() {
     this.data.readItem(this.id$).subscribe(
-      data => this.item$ = data
+      data => this.item$ = Object.assign(data)
     );
   }
 
   update(){
-    
+    console.log("Update Item");
+    const item: Item = Object.assign(this.item$,this.itemForm.value);
+    console.log(item);
+    this.data.updateItem(item).subscribe(
+      suc => {
+            console.log(suc);
+            window.location.href = "http://localhost:4200/collection/" + item.CollectionId + "/items";
+        },
+        err => {
+            console.log(err );
+        }
+      );
   }
 
   delete(id : number){

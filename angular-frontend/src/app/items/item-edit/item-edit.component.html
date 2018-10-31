@@ -1,32 +1,32 @@
-<!-- <div *ngIf="item$">
-    <form method="post">
-        <h1>Edit Item</h1>
+<div *ngIf="item$">
+    <form [formGroup]="itemForm" (ngSubmit)="update()">
+        <h1>New Item</h1>
         <div class="row">
             <div class="col-6 form-group">
                 <label for="Name">Name</label>
-                <input type="text" id="Name" name="Name" value="{{item$.name}}" class="form-control" placeholder="Name" required />
+                <input type="text" id=Name formControlName="Name" class="form-control" placeholder="Name" value="{{item$.Name}}" required />
             </div>
             <div class="col-4 form-group">
                 <label for="Price">Value</label>
-                <input type="number" id="Price" name="Price" value="{{item$.price}}" class="form-control" placeholder="Value" step="0.01" required />
+                <input type="number" id="Price" formControlName="Price" class="form-control" placeholder="Value" step="0.01" value="{{item$.Price}}" required/>
             </div>
             <div class="col-2 form-group">
                 <label for="Collected">Collected</label>
-                <select *ngIf="item$.collected;" name="Collected" class="form-control" required>
-                    <option value=true selected>Yes</option>
-                    <option value=false >No</option>
-                </select>
-                <select *ngIf="!item$.collected" name="Collected" class="form-control" required>
+                <select formControlName="Collected" value="{{item$.Collected}}" class="form-control">
                     <option value=true>Yes</option>
-                    <option value=false selected>No</option>
+                    <option value=false>No</option>
                 </select>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <input type="submit" name="submit" value="Update" class="btn btn-success" />
-                <a class="btn btn-danger float-right" (click)="delete(item$.itemId)">Delete</a>
-            </div>
+        
+          <div class="col-6">
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+          <div class="col-6">
+            <a class="btn btn-danger float-right" (click)="delete(item$.ItemId)">Delete</a>
+          </div>
+            
         </div>
     </form>
-</div> -->
+</div>

@@ -34,7 +34,7 @@ export class CollectionEditComponent implements OnInit {
     this.data.updateCollection(this.collection$).subscribe(
       suc => {
             console.log(suc);
-            window.location.href = "http://localhost:4200/collections";
+            window.location.href = "http://localhost:4200/collection/" + this.collection$.CollectionId + "/items";
         },
         err => {
             console.log(err );

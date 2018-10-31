@@ -26,9 +26,10 @@ namespace AspNet.Controllers
 
         // GET: api/values
         [HttpGet("")]
-        public IEnumerable<Item> Get()
+        public ActionResult<string> Get()
         {
-            return _context.Items.ToList();
+            var collectionItems = _context.Items.ToList();
+            return JsonConvert.SerializeObject(collectionItems, Formatting.Indented);
         }
 
         [HttpGet("collection/{collectionId}")]
@@ -39,25 +40,25 @@ namespace AspNet.Controllers
         }
 
         [HttpGet("{id}"), ActionName("GetCollectionItem")]
-        public async Task<ActionResult<Item>> Get(int id)
+        public async Task<ActionResult<string>> Get(int id)
         {
-            return await _context.Items.FindAsync(id);
+            return JsonConvert.SerializeObject(await _context.Items.FindAsync(id), Formatting.Indented);
         }
 
         // POST api/values
         [HttpPost("")]
-        public async Task<ActionResult<Item>> Post([FromBody]Item value)
+        public async Task<ActionResult<string>> Post([FromBody]Item value)
         {
             value.Active = true;
             _context.Add(value);
             await _context.SaveChangesAsync();
             await UpdateCollection(value.CollectionId);
-            return value;
+            return JsonConvert.SerializeObject(value, Formatting.Indented);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Item>> Put(int id, [FromBody]Item value)
+        public async Task<ActionResult<string>> Put(int id, [FromBody]Item value)
         {
             var db_item = await _context.Items.FindAsync(id);
             db_item.Name = value.Name;
@@ -65,19 +66,19 @@ namespace AspNet.Controllers
             db_item.Price = value.Price;
             await _context.SaveChangesAsync();
             await UpdateCollection(db_item.CollectionId);
-            return db_item;
+            return JsonConvert.SerializeObject(db_item, Formatting.Indented);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Item>> Delete(int id)
+        public async Task<ActionResult<string>> Delete(int id)
         {
             var db_item = await _context.Items.FindAsync(id);
             db_item.Active = false;
             _context.Update(db_item);
             await _context.SaveChangesAsync();
             await UpdateCollection(db_item.CollectionId);
-            return db_item;
+            return JsonConvert.SerializeObject(db_item, Formatting.Indented);
         }
 
         public async Task UpdateCollection(int collectionId)

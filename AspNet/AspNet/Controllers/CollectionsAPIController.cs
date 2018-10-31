@@ -47,17 +47,18 @@ namespace AspNet.Controllers
         // GET: /<controller>/:id
         [HttpPost]
         [Route("")]
-        public ActionResult<Collection> Post([FromBody]Collection value)
+        public ActionResult<string> Post([FromBody]Collection value)
         {
             value.Active = true;
             _context.Collections.Add(value);
             _context.SaveChanges();
-            return value;
+            return JsonConvert.SerializeObject(value, Formatting.Indented);
+
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult<Collection> Put(int id, [FromBody]Collection value)
+        public ActionResult<string> Put(int id, [FromBody]Collection value)
         {
             var collection = _context.Collections.Find(id);
             if (collection == null)
@@ -67,13 +68,13 @@ namespace AspNet.Controllers
             collection.Name = value.Name;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
         [HttpDelete]
         [EnableCors("ApiReady")]
         [Route("{id}")]
-        public ActionResult<Collection> Delete(int id)
+        public ActionResult<string> Delete(int id)
         {
             var collection = _context.Collections.Find(id);
             if (collection == null)
@@ -83,7 +84,7 @@ namespace AspNet.Controllers
             collection.Active = false;
             _context.Collections.Update(collection);
             _context.SaveChanges();
-            return collection;
+            return JsonConvert.SerializeObject(collection, Formatting.Indented);
         }
 
     }
