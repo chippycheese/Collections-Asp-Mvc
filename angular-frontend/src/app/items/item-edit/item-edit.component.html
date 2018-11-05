@@ -12,9 +12,9 @@
             </div>
             <div class="col-2 form-group">
                 <label for="Collected">Collected</label>
-                <select formControlName="Collected" value="{{item$.Collected}}" class="form-control">
-                    <option value=true>Yes</option>
-                    <option value=false>No</option>
+                <select formControlName="Collected" value="{{+item$.Collected}}" class="form-control">
+                    <option value=1>Yes</option>
+                    <option value=0>No</option>
                 </select>
             </div>
         </div>

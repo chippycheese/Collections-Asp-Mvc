@@ -9,7 +9,7 @@ export interface Item {
   CollectionId: number;
   Name: string;
   Price: number;
-  Collected: boolean;
+  Collected: number;
   Active: boolean;
 }
 
@@ -19,7 +19,8 @@ export interface Item {
 
 export class ItemsService {
 
-  itemURL :string = "https://localhost:5001/api/items";
+  // itemURL :string = "http://localhost:3000/api/items"; // node.js
+  itemURL :string = "https://localhost:5001/api/items"; // mac MVC.js
   constructor(private http: HttpClient) { }
 
 
@@ -47,13 +48,7 @@ export class ItemsService {
 
   deleteItem(id) {
     const url = `${this.itemURL}/${id}`;
-    const httpOptions = {
-      headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
-      })
-    };
-    return this.http.delete(url, httpOptions);
+    return this.http.delete(url);
   }
 
 

@@ -29,7 +29,7 @@ export class CollectionEditComponent implements OnInit {
   }
 
   update(){
-    console.log("Update Collection");
+    console.log("Update Collection"); 
     this.collection$ = Object.assign(this.collection$,this.collectionForm.value);
     this.data.updateCollection(this.collection$).subscribe(
       suc => {

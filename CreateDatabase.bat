@@ -3,24 +3,24 @@ use my_collection;
 
 CREATE TABLE `collections` (
   `CollectionId` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(100) DEFAULT NULL,
-  `Total` int(11) DEFAULT NULL,
-  `Collected` int(11) DEFAULT NULL,
+  `Name` varchar(100) NOT NULL DEFAULT '',
+  `Total` int(11) DEFAULT '0',
+  `Collected` int(11) DEFAULT '0',
   `Active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`CollectionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `items` (
   `ItemId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(100) DEFAULT NULL,
-  `Price` decimal(11,2) DEFAULT NULL,
-  `Collected` tinyint(1) DEFAULT NULL,
+  `Name` varchar(100) NOT NULL DEFAULT '',
+  `Price` decimal(11,2) NOT NULL,
+  `Collected` tinyint(1) NOT NULL,
   `CollectionId` int(10) unsigned NOT NULL,
-  `Active` tinyint(1) DEFAULT '1',
+  `Active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ItemId`),
   KEY `collection_id` (`CollectionId`),
   CONSTRAINT `items_ibfk_1` FOREIGN KEY (`CollectionId`) REFERENCES `collections` (`CollectionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 INSERT INTO collections (CollectionId, Name, Collected, Total, Active) VALUES ( 1,'Tools'         , 2, 7, 1);
 INSERT INTO collections (CollectionId, Name, Collected, Total, Active) VALUES ( 2,'Baseball Cards', 1, 2, 0);
