@@ -23,7 +23,7 @@ class CollectionIndex extends Component {
     return (
       <div>
         <p className="h1">My Collections</p>
-        <a href="./collections/new" className="btn btn-primary" style={{color: 'white'}}>New</a>
+        <a href="/items/new" className="btn btn-primary" style={{color: 'white'}}>New</a>
         <table className="table">
           <tbody>
           <tr>

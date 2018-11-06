@@ -30,7 +30,7 @@ const App = () => (
         <Route path="/collections/:collectionId(\d+)/items" exact component={CollectionShow} />
         
         <Route path="/collections/:collectionId(\d+)/items/new" exact component={ItemNew} />
-        <Route path="/collections/:collectionId(\d+)/items/:itemId(\d+)" exact component={ItemEdit} />
+        <Route path="/collections/:collectionId(\d+)/items/:edit/:itemId(\d+)" exact component={ItemEdit} />
 
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import YesNoFromBoolean from '../components/YesNoFromBoolean';
 
 const API = 'http://localhost:4000/api/items/collection/';
 
@@ -22,7 +23,7 @@ class ItemIndex extends Component {
   render() {
     return (
       <div>
-        <a href="./collections/new" className="btn btn-primary mt-2 mb-2" style={{color: 'white'}}>New</a>
+        <a href={`/collections/${this.props.collectionId}/items/new`} className="btn btn-primary mt-2 mb-2" style={{color: 'white'}}>New</a>
         <table className="table">
           <tbody>
           <tr>
@@ -36,10 +37,12 @@ class ItemIndex extends Component {
                return (
                   <tr key = {key}>
                       <td>{item.Name}</td>
-                      <td>{item.Price}</td>
-                      <td>{item.Collected}</td>
+                      <td>${item.Price.toFixed(2)}</td>
+                      <td>
+                      <YesNoFromBoolean active={item.Collected} />
+                      </td>
                       <td style={{width: 80 + 'px'}}>
-                        <a href={`collections/${item.CollectionId}/items/${item.ItemId}`} className="btn btn-info">Info</a>
+                        <a href={`/collections/${item.CollectionId}/items/edit/${item.ItemId}`} className="btn btn-info">Info</a>
                       </td>
                   </tr>
                 )
@@ -49,6 +52,8 @@ class ItemIndex extends Component {
       </div>
     );
   }
+
+
 }
 
 export default ItemIndex;

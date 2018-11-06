@@ -29,11 +29,11 @@ class CollectionEdit extends Component {
             <div className="row">
               <div className="col-12 form-group">
                 <label htmlFor="Name">Name</label>
-                <input type="text" id="Name" name="Name" className="form-control" placeholder="Name" value={this.state.collection.Name} />
+                <input type="text" id="Name" name="Name" className="form-control" placeholder="Name" defaultValue={this.state.collection.Name} />
               </div>
               <div className="col-12 form-group">
                 <button type="Submit" className="btn btn-success">Update</button>
-                <a className="btn btn-danger" style={{float: 'right'}}>Delete</a>
+                <span className="btn btn-danger" style={{float: 'right'}}>Delete</span>
               </div>
               
             </div>

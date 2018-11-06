@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 
 class CollectionNew extends Component {
 
-  constructor(props){
-    super(props) 
-    
-  }
+  // constructor(props){
+  //   super(props)     
+  // }
 
-  componentDidMount() {
+  // componentDidMount() {
     
-  }
+  // }
 
   render() {
     return (
