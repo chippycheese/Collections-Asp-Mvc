@@ -18,8 +18,8 @@ export interface Collection {
 
 export class CollectionsService {
 
-  // collectionURL :string = "http://localhost:3000/api/collections"; // node.js
-  collectionURL :string = "https://localhost:5001/api/collections"; // mac MVC.js
+  collectionURL :string = "http://localhost:4000/api/collections"; // node.js
+  // collectionURL :string = "https://localhost:5001/api/collections"; // mac MVC.js
   
   constructor(private http: HttpClient) { }
 

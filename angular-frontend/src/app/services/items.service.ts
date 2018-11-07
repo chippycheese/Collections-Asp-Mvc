@@ -19,8 +19,8 @@ export interface Item {
 
 export class ItemsService {
 
-  // itemURL :string = "http://localhost:3000/api/items"; // node.js
-  itemURL :string = "https://localhost:5001/api/items"; // mac MVC.js
+  itemURL :string = "http://localhost:4000/api/items"; // node.js
+  // itemURL :string = "https://localhost:5001/api/items"; // mac MVC.js
   constructor(private http: HttpClient) { }
 
 
