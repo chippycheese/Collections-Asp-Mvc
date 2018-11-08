@@ -1,0 +1,5 @@
+.h1 Edit Collection
+=form_tag collections_update_path do
+  =render "collections/form", :collection => @collection
+  =submit_tag "Update", :class => "btn btn-success"
+  =link_to "Delete", collections_delete_path(@collection.CollectionId), {:class => "btn btn-danger", :style => "float: right"}

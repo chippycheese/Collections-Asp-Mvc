@@ -1,0 +1,4 @@
+.h1 New Item
+=form_tag items_create_path do
+  =render "items/form", :item => Item.new
+  =submit_tag "Create", :class => "btn btn-success"
