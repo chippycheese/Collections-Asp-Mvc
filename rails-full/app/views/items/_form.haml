@@ -1,0 +1,10 @@
+.row.form-group
+  .col-6
+    =label_tag "item_Name", "Name"
+    =text_field_tag "item[Name]", item.Name, :class =>"form-control", :placeholder => "Name", :required => true
+  .col-4
+    =label_tag "item_Price", "Price"
+    =number_field_tag "item[Price]", item.Price, :class =>"form-control", :placeholder => "Name", :required => true, :step => 0.01
+  .col-2
+    =label_tag "item_Collected", "Collected"
+    =select_tag "item[Collected]", options_for_select([ ["Yes",true], ["No",false] ], item.Collected), :class =>"form-control"

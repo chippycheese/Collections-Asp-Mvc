@@ -1,0 +1,5 @@
+.h1 Edit Item
+=form_tag items_update_path do
+  =render "items/form", :item => @item
+  =submit_tag "Update", :class => "btn btn-success"
+  =link_to "Delete", items_delete_path(@item.CollectionId, @item.ItemId), {:class => "btn btn-danger", :style => "float: right"}

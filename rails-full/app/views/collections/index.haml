@@ -1,0 +1,18 @@
+.h1 My Collections
+=link_to "New", collections_new_path, :class => "btn btn-primary"
+
+%table.table
+  %tr
+    %th Name
+    %th Collected
+    %th{:style => "width: 80px"} Actions
+  -@collections.each do |collection|
+    %tr
+      %td
+        =collection.Name
+      %td
+        =collection.Collected
+        ="/"
+        =collection.Total
+      %td{:style => "width: 80px"}
+        =link_to "Info", items_path(collection.CollectionId), :class => "btn btn-info"

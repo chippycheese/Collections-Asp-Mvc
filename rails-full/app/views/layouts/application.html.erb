@@ -8,7 +8,10 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body style="background-color: lightgrey">
+    <%=render "layouts/navbar"%>
+    <div style="margin: 20px">
+      <%= yield %>
+    </div>
   </body>
 </html>

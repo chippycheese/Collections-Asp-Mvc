@@ -1,0 +1,33 @@
+.h1 Show Collection
+.row
+  .col-4
+    .h3=@collection.Name
+  .col-4
+    .h3
+      =@collection.Collected
+      =" / "
+      =@collection.Total
+  .col-4
+    =link_to "Edit", collections_edit_path, {:class => "btn btn-warning", :style => "float: right"}
+
+.h3 Items
+=link_to "New", items_new_path(@collection.CollectionId), :class => "btn btn-primary"
+
+%table.table
+  %tr
+    %th Name
+    %th Price
+    %th Collected
+    %th{:style => "width: 80px"} Actions
+  -@items.each do |item|
+    %tr
+      %td
+        =item.Name
+      %td
+        =item.Price
+      -if item.Collected
+        %td Yes
+      -else
+        %td No
+      %td{:style => "width: 80px"}
+        =link_to "Info", items_edit_path(@collection.CollectionId, item.ItemId), :class => "btn btn-info"

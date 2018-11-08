@@ -13,17 +13,17 @@
 ActiveRecord::Schema.define(version: 20181108022536) do
 
   create_table "collections", primary_key: "CollectionId", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "Name"
-    t.integer "Collected"
-    t.integer "Total"
-    t.boolean "Active"
+    t.string "Name", null: false
+    t.integer "Collected", default: 0, null: false
+    t.integer "Total", default: 0, null: false
+    t.boolean "Active", default: true, null: false
   end
 
   create_table "items", primary_key: "ItemId", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "Name"
-    t.decimal "Price", precision: 10
-    t.boolean "Collected"
-    t.boolean "Active"
+    t.string "Name", null: false
+    t.decimal "Price", precision: 10, default: "0", null: false
+    t.boolean "Collected", default: false, null: false
+    t.boolean "Active", default: true, null: false
     t.bigint "CollectionId"
     t.index ["CollectionId"], name: "index_items_on_CollectionId"
   end
